@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible">
+
+        <title>Mini NASA</title>
+
+        
+    </head>
+    <body>
+        <script type="module">
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+            // TODO: Add SDKs for Firebase products that you want to use
+            // https://firebase.google.com/docs/web/setup#available-libraries
+          
+            // Your web app's Firebase configuration
+            const firebaseConfig = {
+              apiKey: "AIzaSyCH251uwz1BSzV999sUsHe8SHwX3lLHRZo",
+              authDomain: "prueba-nasa-api.firebaseapp.com",
+              projectId: "prueba-nasa-api",
+              storageBucket: "prueba-nasa-api.appspot.com",
+              messagingSenderId: "832889751674",
+              appId: "1:832889751674:web:fcae68f5a4e3ddffa6d3c3"
+            };
+          
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+        </script>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> 
+        <div id="aplicacion">
+            {{mensaje}}
+        </div>
+        <script>
+            const {createApp} = Vue
+            createApp({
+                data(){
+                    return{
+                        mensaje: "Hello Vue!"
+                    }
+                }
+            }).mount("#aplicacion")
+        </script>
+    </body>
+</html>
