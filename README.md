@@ -1,1 +1,0 @@
-# davewmf.github.io
