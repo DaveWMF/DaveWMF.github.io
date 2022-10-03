@@ -1,5 +1,6 @@
 export default {
     template:
+    `
     <nav>
         <h1><img width="100" height="100" src="assets/images/Mini_NASA.svg"/> NASA</h1>
         <ul>
@@ -10,5 +11,6 @@ export default {
             <li><a class="nav-btn">Robers en Marte</a></li>
         </ul>
     </nav>
+    `
 }
 
