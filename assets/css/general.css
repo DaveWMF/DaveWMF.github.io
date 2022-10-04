@@ -98,8 +98,6 @@ Formato de contenido
 .content-layout
 {
     padding: 0;
-    overflow-x: hidden;
-    flex: 1 1 auto;
 }
 
 .flex-vertical-static
@@ -140,6 +138,10 @@ Formato de contenido
 
 .text-justify{
     text-align: justify;
+}
+
+.text-color-white{
+    color:white;
 }
 
 @media only screen and (min-width: 200px) and (max-width: 599px) 

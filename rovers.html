@@ -17,7 +17,15 @@
         <div id="aplicacion">
             <cabecera></cabecera>
             <div class="content-layout">
-
+                <div class="col-s-12 col-m-6 col-4 cont-inline"><div class="card"><h1>Curiosity</h1></div></div>
+                <div class="col-s-12 col-m-6 col-4 cont-inline"><div class="card"><h1>Oportunity</h1></div></div>
+                <div class="col-s-12 col-m-12 col-4 cont-inline"><div class="card"><h1>Spirit</h1></div></div>
+                <div class="col-s-12 cont-inline"><h1 class="">Primeras fotos</h1></div>
+                <div class="col-s-6 col-m-4 col-3 cont-inline" v-for="imagen in imagenes">
+                    <div class="card">
+                        
+                    </div> 
+                </div>
             </div>
         </div>
         <script type="module">
@@ -27,6 +35,9 @@
 
             createApp({
                 data(){
+                    return {
+                        imagenes:[]
+                    }
                 },
                 components: {
                     Cabecera,
