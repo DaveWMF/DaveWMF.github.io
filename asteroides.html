@@ -9,14 +9,42 @@
 
         <link rel="stylesheet" href="assets/css/general.css">
         <link rel="stylesheet" href="assets/css/card.css">
+        <link rel="stylesheet" href="assets/css/table.css">
+        <script src="https://kit.fontawesome.com/4feec9d559.js" crossorigin="anonymous"></script>
         
     </head>
     <body>
-        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> 
-        <script src="./assets/js/api-nasa-imagenes.js" ></script>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script src="./assets/js/api-nasa-asteroides.js" ></script>
         <div id="aplicacion">
             <cabecera></cabecera>
             <div class="content-layout">
+                <div class="cont-padding table-title"><h1><i class="fa-solid fa-meteor"></i>Asteroides: ¡Cuidado con tu cabeza!<i class="fa-solid fa-meteor"></i></h1>
+                    <p class="text-justify">Te presentamos los datos de los asteroides que orbitan muy cerca de nuestro planeta.
+                        Cada asteroide proviene por lo general de un cinturon de asteroides situado entre Marte y Jupiter.
+                        En raras ocaciones podemos ver fragmentos de estos asteroides en forma de meteoros que impactan con la tierra, dejando una hueya llamada crater.
+                        Esto se puede ver más claro en la luna, pues se distingue con mayor claridad dichos impactos, dando la casualidad de que a través de los años se formó un conejo de crateres en la luna.
+                    </p>
+                </div>
+                <div class="cont-center table-container">
+                    <h1 class="table-title">Asteroides más cercanos de hoy</h1>
+                    <table id="actuales" class="cont-center">
+                        <tr>
+                            <th>Asteroide</th>
+                            <th>Velocidad (km/h)</th>
+                            <th>Proximidad(km)</th>
+                            <th>Peligroso</th>
+                        </tr>
+                        
+                        <tr v-for="asteroideH in asteroidesHoy" :key="asteroideH.id">
+                            <td>{{asteroideH.name}}</td>
+                            <td>{{asteroideH.close_approach_data[0].relative_velocity.kilometers_per_hour}}</td>
+                            <td>{{asteroideH.close_approach_data[0].miss_distance.kilometers}}</td>
+                            <td class="cell-danger" v-if="asteroideH.is_potentially_hazardous_asteroid">Si</td>
+                            <td class="cell-safe" v-else>No</td>
+                        </tr>
+                    </table>
+                </div>
                 
             </div>
         </div>
@@ -27,9 +55,32 @@
 
             createApp({
                 data(){
+                    return{
+                        asteroidesHoy: [],
+                        asteroidesProximos: []
+                    }
+                },
+                created(){
+                    this.agregarAsteroidesHoy();
                 },
                 components: {
                     Cabecera,
+                },
+                methods:{
+                    async agregarAsteroidesHoy(){
+                        let datos = await obtenerAsteroidesActuales()
+                            .then(function(data){
+                                console.log(data);
+                                console.log(data.near_earth_objects[0]);
+                                console.log(data.near_earth_objects[new Date().toISOString().substring(0,10)]);
+                                return data.near_earth_objects[new Date().toISOString().substring(0,10)];
+                            });
+                        console.log("Datos:" + datos);
+                        datos.forEach(element => {
+                            this.asteroidesHoy.push(element);
+                        });
+                        console.log("AHoy:"+JSON.stringify(this.asteroidesHoy));
+                    }
                 }
             }).mount("#aplicacion");
         </script>
