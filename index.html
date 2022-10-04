@@ -7,27 +7,42 @@
 
         <title>Mini NASA</title>
 
+        <link rel="stylesheet" href="assets/css/general.css">
+        <link rel="stylesheet" href="assets/css/card.css">
+        <link rel="stylesheet" href="assets/css/statistics.css">
         
     </head>
     <body>
-        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> 
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script src="./assets/js/api-nasa-imagenes.js" ></script>
+        <script src="./assets/js/api-covid.js" ></script>
         <div id="aplicacion">
-            <Cabecera></Cabecera>
-            {{mensaje}}
+            <cabecera></cabecera>
+            <div class="content-layout">
+                <div class="col-s-12 col-6 cont-inline"><tarjeta-imagen-dia></tarjeta-imagen-dia></div>
+                <div class="col-s-12 col-6 cont-inline"><tarjeta-asteroides></tarjeta-asteroides></div>
+                <div class="col-s-12 col-5 cont-inline"><tarjeta-rovers></tarjeta-rovers></div>
+                <div class="col-s-12 col-7 cont-inline"><tarjeta-covid></tarjeta-covid></div>
+            </div>
         </div>
         <script type="module">
             import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 
             import Cabecera from './src/templates/cabecera.js';
+            import TarjetaImagenDia from './src/templates/tarjetaimagendia.js';
+            import TarjetaAsteroides from './src/templates/tarjetaasteroides.js';
+            import TarjetaRovers from './src/templates/tarjetarovers.js';
+            import TarjetaCovid from './src/templates/tarjetacovid.js';
 
             createApp({
                 data(){
-                    return{
-                        mensaje: "Hello Vue!"
-                    }
                 },
                 components: {
-                    Cabecera
+                    Cabecera,
+                    TarjetaImagenDia,
+                    TarjetaAsteroides,
+                    TarjetaRovers,
+                    TarjetaCovid,
                 }
             }).mount("#aplicacion");
         </script>

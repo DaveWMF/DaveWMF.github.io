@@ -1,29 +1,25 @@
 const API_KEY = "KGNIFQJ3PRYtndGGK4hHgTqxfvHYh3zjByrWYgh5";
-let pagina = "https://api.nasa.gov/planetary/apod?api_key";
+let pagina = "https://api.nasa.gov/planetary/apod?";
 
-function obtenerImagenesPeriodo(fecha, cuenta)
+async function obtenerImagenesPeriodo(fecha, cuenta)
 {
-    fetch(pagina)
+    let data = await fetch(pagina +
+        "api_key=" + API_KEY +
+        "&start_date=" + fecha +
+        "&count=" + cuenta)
     .then((response) => response.json())
-    .then((data) => console.log(data))
+    .then((data) => {return data})
     .catch( (error) => console.log(error));
+    return data;
 }
 
-function obtenerImagen(dia)
+async function obtenerImagen(dia)
 {
-    fetch(pagina +
+    let data = await fetch(pagina +
         "api_key=" + API_KEY +
         "&date=" + dia)
     .then((response) => response.json())
-    .then((data) => console.log(data))
+    .then((data) => {return data})
     .catch( (error) => console.log(error));
-}
-
-function obtenerImagenDelDia()
-{
-    fetch(pagina +
-        "api_key=" + API_KEY)
-    .then((response) => response.json())
-    .then((data) => console.log(data))
-    .catch( (error) => console.log(error));
+    return data;
 }

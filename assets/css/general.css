@@ -1,7 +1,221 @@
+/**************************
+General
+****************************/
+div
+{
+    
+    margin: 0;
+    padding: 0;
+}
 
-.nav-btn{
+body 
+{
+    margin: 0;
+    padding: 0;
+}
+
+/**************************
+Barra de navegación
+****************************/
+
+.header 
+{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2em;
+    color: white;
+    margin: 0;
+    display: inline-block;
+}
+
+.header-icon
+{
+    align-content: center;
+    align-items: center;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.nav-bar 
+{
+    position: relative;
+    background-color: rgb(50, 75, 200);
+    width: 100%;
+    list-style-type: none;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-bar h1
+{
+    display: inline;
+}
+
+.nav-bar img
+{
+    display: inline;
+}
+
+.nav-bar ul
+{
+    padding: 0;
+    margin: 0;
+}
+
+.nav-bar div
+{
+    display: inline;
+}
+
+.nav-bar li 
+{
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-btn 
+{
+    display: inline-block;
     background-color: rgb(50, 75, 200);
     color: white;
-    font: arial;
-    height: 50;
+    font-family: arial;
+    text-decoration: none;
+    padding: 1em;
+}
+
+.nav-btn:hover
+{
+    background-color: rgb(32, 48, 130);
+    cursor: pointer;
+}
+
+/**************************
+Formato de contenido
+****************************/
+
+.content-layout
+{
+    padding: 0;
+    overflow-x: hidden;
+    flex: 1 1 auto;
+}
+
+.flex-vertical-static
+{
+    flex: 0 1 auto;
+}
+
+.flex-vertical-fill
+{
+    flex: 1 1 auto;
+}
+
+.cont-inline 
+{
+    display: inline-block;
+}
+
+.cont-center
+{
+    text-align: center;
+    align-content: center;
+}
+
+.cont-flex{
+    display: flex;
+}
+
+.cont-vert-center
+{
+    vertical-align: middle;
+}
+
+@media only screen and (min-width: 200px) and (max-width: 599px) 
+{
+    .s-hidden {display: none;}
+}
+
+@media only screen and (min-width: 500px) and (max-width: 768px) 
+{
+    .m-hidden {display: none;}
+}
+
+@media only screen and (min-width: 768px) 
+{
+    .l-hidden {display: none;}
+}
+
+@media only screen and (min-width: 200px) 
+{
+    .col-s-1 {width: 8.33%;}
+    .col-s-2 {width: 16.66%;}
+    .col-s-3 {width: 25%;}
+    .col-s-4 {width: 33.33%;}
+    .col-s-5 {width: 41.66%;}
+    .col-s-6 {width: 50%;}
+    .col-s-7 {width: 58.33%;}
+    .col-s-8 {width: 66.66%;}
+    .col-s-9 {width: 75%;}
+    .col-s-10 {width: 83.33%;}
+    .col-s-11 {width: 91.66%;}
+    .col-s-12 {width: 100%;}
+  }
+@media only screen and (min-width: 600px) 
+{
+    .col-m-1 {width: 8.33%;}
+    .col-m-2 {width: 16.66%;}
+    .col-m-3 {width: 25%;}
+    .col-m-4 {width: 33.33%;}
+    .col-m-5 {width: 41.66%;}
+    .col-m-6 {width: 50%;}
+    .col-m-7 {width: 58.33%;}
+    .col-m-8 {width: 66.66%;}
+    .col-m-9 {width: 75%;}
+    .col-m-10 {width: 83.33%;}
+    .col-m-11 {width: 91.66%;}
+    .col-m-12 {width: 100%;}
+  }
+  @media only screen and (min-width: 768px) 
+  {
+    .col-1 {width: 8.33%;}
+    .col-2 {width: 16.66%;}
+    .col-3 {width: 25%;}
+    .col-4 {width: 33.33%;}
+    .col-5 {width: 41.66%;}
+    .col-6 {width: 50%;}
+    .col-7 {width: 58.33%;}
+    .col-8 {width: 66.66%;}
+    .col-9 {width: 75%;}
+    .col-10 {width: 83.33%;}
+    .col-11 {width: 91.66%;}
+    .col-12 {width: 100%;}
+  }
+
+/**************************
+Fondos de componentes
+****************************/
+.bg-asteroid
+{
+    background-image: url("https://spaceplace.nasa.gov/asteroid-or-meteor/sp/asteroid-eros.sp.png");
+}
+
+.bg-rover
+{
+    background-image: url("https://mars.nasa.gov/layout/mars2020/images/PIA23764-RoverNamePlateonMars-web.jpg");
+}
+
+.bg-red
+{
+    background-color: red;
+}
+
+.bg-darkred
+{
+    background-color: darkred;
+}
+
+.bg-blue
+{
+    background-color: rgb(23, 158, 255);
 }

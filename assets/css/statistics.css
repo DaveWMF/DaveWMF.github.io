@@ -1,0 +1,30 @@
+
+.bar-field
+{
+    display: inline-block;
+    margin: 1em;
+}
+
+.bar-container
+{
+    height: 8em;
+    width: 5em;
+    margin: 0.5em;
+    padding: 0;
+    box-shadow: 2px 2px 2px;
+}
+
+.bar-fill
+{
+    background-color: rgb(230, 230, 230);
+    width: 5em;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.bar-text 
+{
+    font-size: larger;
+    text-align: center;
+}

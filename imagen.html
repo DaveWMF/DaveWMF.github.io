@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible">
+
+        <title>Mini NASA</title>
+
+        <link rel="stylesheet" href="assets/css/general.css">
+        <link rel="stylesheet" href="assets/css/card.css">
+        <link rel="stylesheet" href="assets/css/images.css">
+        <script src="https://kit.fontawesome.com/4feec9d559.js" crossorigin="anonymous"></script>
+        
+    </head>
+    <body>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> 
+        <script src="./assets/js/api-nasa-imagenes.js" ></script>
+        <div id="aplicacion">
+            <cabecera></cabecera>
+            <div class="content-layout">
+                <div class="cont-center">
+                    <div class="img-carousel-btn-container cont-inline col-s-2"><button class="img-carousel-btn" @click="buscarSiguiente"><i class="fa-solid fa-chevron-left"></i></button></div>
+                    <div class="cont-inline col-s-8"><br><input class="img-carousel-date" type="date" v-model="dia" @change="buscarDia"><br><br></div>
+                    <div class="img-carousel-btn-container cont-inline col-s-2"><button class="img-carousel-btn" @click="buscarAnterior"><i class="fa-solid fa-chevron-right"></i></button></div>
+                </div>
+                <div class=" img-carousel-container cont-center">
+                    
+                    <div class="img-carousel-image cont-inline col-s-8">
+                        <div id="imagen" class="img-main"></div>
+                        <div class="img-carousel-info"><h3 id="titulo"></h3><p id="info"></p></div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <script type="module">
+            import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+            import Cabecera from './src/templates/cabecera.js';
+
+            createApp({
+                data()
+                {
+                    return {
+                        cuenta: 0,
+                        dia: new Date().toISOString().substring(0,10)
+                    }
+                },
+                created(){
+                    this.dia = new Date().toISOString().substring(0,10);
+                    obtenerImagen(this.dia)
+                    .then(function(data){
+                        document.getElementById("imagen").style = "background-image:url("+data.url+");";
+                        document.getElementById("info").innerHTML = data.explanation;
+                        document.getElementById("titulo").innerHTML = data.title;
+                    });
+                },
+                methods: {
+                    buscarAnterior(){
+                        this.cuenta -= 1;
+                        this.dia = new Date(Date.now()+ this.cuenta * 86400000).toISOString().substring(0,10);
+                        obtenerImagen(this.dia)
+                        .then(function(data){
+                            document.getElementById("imagen").style = "background-image:url("+data.url+");";
+                            document.getElementById("info").innerHTML = data.explanation;
+                            document.getElementById("titulo").innerHTML = data.title;
+                        });
+                    },
+                    buscarSiguiente(){
+                        if (this.cuenta != 0){
+                            this.cuenta += 1;
+                            this.dia = new Date(Date.now()+ this.cuenta * 86400000).toISOString().substring(0,10);
+                            obtenerImagen(this.dia)
+                            .then(function(data){
+                                document.getElementById("imagen").style = "background-image:url("+data.url+");";
+                                document.getElementById("info").innerHTML = data.explanation;
+                                document.getElementById("titulo").innerHTML = data.title;
+                            });
+                        }
+                        
+                    },
+                    buscarDia(){
+                        if(new Date(this.dia) <= new Date()){
+                            this.cuenta = Math.trunc((new Date(this.dia) - new Date())/86400000);
+                            this.dia = new Date(Date.now()+ this.cuenta * 86400000).toISOString().substring(0,10);
+                            obtenerImagen(this.dia)
+                            .then(function(data){
+                                document.getElementById("imagen").style = "background-image:url("+data.url+");";
+                                document.getElementById("info").innerHTML = data.explanation;
+                                document.getElementById("titulo").innerHTML = data.title;
+                            });
+                        }else{
+                            alert("Fecha fuera de rango.");
+                            this.cuenta = 0;
+                            this.dia = new Date().toISOString().substring(0,10);
+                            obtenerImagen(this.dia)
+                            .then(function(data){
+                                document.getElementById("imagen").style = "background-image:url("+data.url+");";
+                                document.getElementById("info").innerHTML = data.explanation;
+                                document.getElementById("titulo").innerHTML = data.title;
+                            });
+                        }
+                    }
+                },
+                components: 
+                {
+                    Cabecera,
+                }
+            }).mount("#aplicacion");
+        </script>
+    </body>
+</html>
