@@ -70,16 +70,11 @@
                     async agregarAsteroidesHoy(){
                         let datos = await obtenerAsteroidesActuales()
                             .then(function(data){
-                                console.log(data);
-                                console.log(data.near_earth_objects[0]);
-                                console.log(data.near_earth_objects[new Date().toISOString().substring(0,10)]);
                                 return data.near_earth_objects[new Date().toISOString().substring(0,10)];
                             });
-                        console.log("Datos:" + datos);
                         datos.forEach(element => {
                             this.asteroidesHoy.push(element);
                         });
-                        console.log("AHoy:"+JSON.stringify(this.asteroidesHoy));
                     }
                 }
             }).mount("#aplicacion");

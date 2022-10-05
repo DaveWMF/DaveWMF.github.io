@@ -13,17 +13,45 @@
     </head>
     <body>
         <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> 
-        <script src="./assets/js/api-nasa-imagenes.js" ></script>
+        <script src="./assets/js/api-nasa-rovers.js" ></script>
         <div id="aplicacion">
             <cabecera></cabecera>
             <div class="content-layout">
-                <div class="col-s-12 col-m-6 col-4 cont-inline"><div class="card"><h1>Curiosity</h1></div></div>
-                <div class="col-s-12 col-m-6 col-4 cont-inline"><div class="card"><h1>Oportunity</h1></div></div>
-                <div class="col-s-12 col-m-12 col-4 cont-inline"><div class="card"><h1>Spirit</h1></div></div>
-                <div class="col-s-12 cont-inline"><h1 class="">Primeras fotos</h1></div>
-                <div class="col-s-6 col-m-4 col-3 cont-inline" v-for="imagen in imagenes">
-                    <div class="card">
-                        
+                <div class="col-s-12 col-m-6 col-4 cont-inline">
+                    <div class="card-dark">
+                        <h1>Curiosity</h1>
+                        <p>Despegue: <span id="curi-despegue"></span></p>
+                        <p>Aterrizaje: <span id="curi-aterrizaje"></span></p>
+                        <p>Duración (soles de marte): <span id="curi-duracion"></span></p>
+                        <p>Fotos tomadas: <span id="curi-num-fotos"></span></p>
+                    </div>
+                </div>
+                <div class="col-s-12 col-m-6 col-4 cont-inline">
+                    <div class="card-dark">
+                        <h1>Opportunity</h1>
+                        <p>Despegue: <span id="opp-despegue"></span></p>
+                        <p>Aterrizaje: <span id="opp-aterrizaje"></span></p>
+                        <p>Duración (soles de marte): <span id="opp-duracion"></span></p>
+                        <p>Fotos tomadas: <span id="opp-num-fotos"></span></p>
+                    </div>
+                </div>
+                <div class="col-s-12 col-m-12 col-4 cont-inline">
+                    <div class="card-dark">
+                        <h1>Spirit</h1>
+                        <p>Despegue: <span id="spirit-despegue"></span></p>
+                        <p>Aterrizaje: <span id="spirit-aterrizaje"></span></p>
+                        <p>Duración (soles de marte): <span id="spirit-duracion"></span></p>
+                        <p>Fotos tomadas: <span id="spirit-num-fotos"></span></p>
+                    </div>
+                </div>
+
+
+
+                <div class="col-s-12 cont-inline cont-padding"><h1 class="">Primeras fotos</h1></div>
+                <div class="col-s-6 col-m-4 col-3 cont-inline" v-for="imagen in primerasImagenes">
+                    <div class="card-img" :style="{'background-image': 'url(' + (imagen.img_src) + ')'}">
+                        <p>{{imagen.rover.name}}</p>
+                        <p>{{new Date(imagen.earth_date).toLocaleDateString("es-MX")}}</p>
                     </div> 
                 </div>
             </div>
@@ -36,11 +64,72 @@
             createApp({
                 data(){
                     return {
-                        imagenes:[]
+                        primerasImagenes:[],
+                        ultimasImagenes:[]
                     }
+                },
+                created(){
+                    this.agregarInfoRovers();
                 },
                 components: {
                     Cabecera,
+                },
+                methods:{
+                    async agregarInfoRovers(){
+                        let curiosity = await obtenerRover("Curiosity")
+                            .then(function(data){
+                                return data.photo_manifest;
+                            });
+                        let opportunity = await obtenerRover("Opportunity")
+                            .then(function(data){
+                                return data.photo_manifest;
+                            });
+                        let spirit = await obtenerRover("Spirit")
+                            .then(function(data){
+                                return data.photo_manifest;
+                            });
+                        document.getElementById("curi-despegue").innerHTML = new Date(curiosity.launch_date).toLocaleDateString("es-MX");
+                        document.getElementById("curi-aterrizaje").innerHTML = new Date(curiosity.landing_date).toLocaleDateString("es-MX");
+                        document.getElementById("curi-duracion").innerHTML = curiosity.max_sol.toLocaleString("es-MX");
+                        document.getElementById("curi-num-fotos").innerHTML = curiosity.total_photos.toLocaleString("es-MX");
+                        
+                        document.getElementById("opp-despegue").innerHTML = new Date(opportunity.launch_date).toLocaleDateString("es-MX");
+                        document.getElementById("opp-aterrizaje").innerHTML = new Date(opportunity.landing_date).toLocaleDateString("es-MX");
+                        document.getElementById("opp-duracion").innerHTML = opportunity.max_sol.toLocaleString("es-MX");
+                        document.getElementById("opp-num-fotos").innerHTML = opportunity.total_photos.toLocaleString("es-MX");
+                        
+                        document.getElementById("spirit-despegue").innerHTML = new Date(spirit.launch_date).toLocaleDateString("es-MX");
+                        document.getElementById("spirit-aterrizaje").innerHTML = new Date(spirit.landing_date).toLocaleDateString("es-MX");
+                        document.getElementById("spirit-duracion").innerHTML = spirit.max_sol.toLocaleString("es-MX");
+                        document.getElementById("spirit-num-fotos").innerHTML = spirit.total_photos.toLocaleString("es-MX");
+
+                        this.agregarImagenes(10, 10, 10, this.primerasImagenes);
+                        this.agregarImagenes(curiosity.max_sol, opportunity.max_sol, spirit.max_sol, this.ultimasImagenes);
+                    },
+                    async agregarImagenes(sol_curio, sol_opp, sol_spirit, lista){
+                        let prim_imgs_curio = await obtenerImagenes("curiosity", sol_curio)
+                            .then(function(data){
+                                return data.photos;
+                            });
+                        prim_imgs_curio.slice(0,10).forEach(element => {
+                            lista.push(element);
+                        });
+                        let prim_imgs_opp = await obtenerImagenes("opportunity", sol_opp)
+                            .then(function(data){
+                                return data.photos;
+                            });
+                        prim_imgs_opp.slice(0,10).forEach(element => {
+                            lista.push(element);
+                        });
+                        let prim_imgs_spirit = await obtenerImagenes("spirit", sol_spirit)
+                            .then(function(data){
+                                return data.photos;
+                            });
+                        prim_imgs_spirit.slice(0,10).forEach(element => {
+                            lista.push(element);
+                        });
+                        console.log(lista);
+                    }
                 }
             }).mount("#aplicacion");
         </script>
